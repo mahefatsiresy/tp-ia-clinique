@@ -1,0 +1,231 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "process",
+        "importPath": "rapidfuzz",
+        "description": "rapidfuzz",
+        "isExtraImport": true,
+        "detail": "rapidfuzz",
+        "documentation": {}
+    },
+    {
+        "label": "fuzz",
+        "importPath": "rapidfuzz",
+        "description": "rapidfuzz",
+        "isExtraImport": true,
+        "detail": "rapidfuzz",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "Texte",
+        "kind": 6,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "class Texte(BaseModel):\n    texte: str\n@app.post(\"/corriger\")\ndef corriger(input: Texte):\n    return spell_check_text(input.texte)\n# Test local (optionnel)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"correctionOrthographe:app\", host=\"127.0.0.1\", port=8000, reload=True)\nfrom fastapi.middleware.cors import CORSMiddleware",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "load_dictionary",
+        "kind": 2,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "def load_dictionary(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return [line.strip().lower() for line in f if line.strip()]\ndictionary = load_dictionary(DICTIONARY_PATH)\nprint(f\"{len(dictionary)} mots chargés\")\nprint(dictionary[:10])  # aperçu\n# Vérifier si un mot est correct\ndef is_correct(word):\n    return word.lower() in dictionary\n# Proposer des corrections (Levenshtein)",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "is_correct",
+        "kind": 2,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "def is_correct(word):\n    return word.lower() in dictionary\n# Proposer des corrections (Levenshtein)\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,\n        dictionary,\n        scorer=fuzz.ratio,\n        limit=limit\n    )",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "suggest_corrections",
+        "kind": 2,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "def suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,\n        dictionary,\n        scorer=fuzz.ratio,\n        limit=limit\n    )\n    return [s[0] for s in suggestions]\n# Vérification orthographique d'un texte complet\ndef spell_check_text(text):",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "spell_check_text",
+        "kind": 2,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "def spell_check_text(text):\n    words = re.findall(r\"\\b\\w+\\b\", text.lower())\n    errors = {}\n    for word in words:\n        if not is_correct(word):\n            errors[word] = suggest_corrections(word)\n    return errors\n# --- API FastAPI ---\napp = FastAPI(title=\"Correction Orthographe Malagasy\")\n# Modèle de données pour l'API",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "corriger",
+        "kind": 2,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "def corriger(input: Texte):\n    return spell_check_text(input.texte)\n# Test local (optionnel)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"correctionOrthographe:app\", host=\"127.0.0.1\", port=8000, reload=True)\nfrom fastapi.middleware.cors import CORSMiddleware\napp = FastAPI(title=\"Correction Orthographe Malagasy\")\n# Autoriser le frontend\norigins = [",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "DICTIONARY_PATH",
+        "kind": 5,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "DICTIONARY_PATH = os.path.join(os.path.dirname(__file__), \"dictionnaire.txt\")\n# Charger le dictionnaire\ndef load_dictionary(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return [line.strip().lower() for line in f if line.strip()]\ndictionary = load_dictionary(DICTIONARY_PATH)\nprint(f\"{len(dictionary)} mots chargés\")\nprint(dictionary[:10])  # aperçu\n# Vérifier si un mot est correct\ndef is_correct(word):",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "dictionary",
+        "kind": 5,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "dictionary = load_dictionary(DICTIONARY_PATH)\nprint(f\"{len(dictionary)} mots chargés\")\nprint(dictionary[:10])  # aperçu\n# Vérifier si un mot est correct\ndef is_correct(word):\n    return word.lower() in dictionary\n# Proposer des corrections (Levenshtein)\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "app = FastAPI(title=\"Correction Orthographe Malagasy\")\n# Modèle de données pour l'API\nclass Texte(BaseModel):\n    texte: str\n@app.post(\"/corriger\")\ndef corriger(input: Texte):\n    return spell_check_text(input.texte)\n# Test local (optionnel)\nif __name__ == \"__main__\":\n    import uvicorn",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "app = FastAPI(title=\"Correction Orthographe Malagasy\")\n# Autoriser le frontend\norigins = [\n    \"http://localhost:3000\",  # URL de ton frontend React par exemple\n    \"*\",  # tu peux mettre \"*\" temporairement pour tout autoriser\n]\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "origins",
+        "kind": 5,
+        "importPath": "backend.correctionOrthographe",
+        "description": "backend.correctionOrthographe",
+        "peekOfCode": "origins = [\n    \"http://localhost:3000\",  # URL de ton frontend React par exemple\n    \"*\",  # tu peux mettre \"*\" temporairement pour tout autoriser\n]\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],",
+        "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "violates_rules",
+        "kind": 2,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "def violates_rules(word):\n    for pattern in forbidden_patterns:\n        if re.search(pattern, word):\n            return True\n    return False\n\"\"\"petite test\"\"\"\ntest_words = [\n    \"anbato\",\n    \"mkaty\",\n    \"andriamanitra\",",
+        "detail": "backend.regex",
+        "documentation": {}
+    },
+    {
+        "label": "is_valid_structure",
+        "kind": 2,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "def is_valid_structure(word):\n    pattern = r\"^[a-z]{2,}$\"\n    return re.match(pattern, word) is not None\nprint(is_valid_structure(\"malagasy\"))  # True\nprint(is_valid_structure(\"m@la\"))      # False\nprint(is_valid_structure(\"a\"))\n\"\"\"Analyse complète par règles\"\"\"\ndef rule_based_check(text):\n    words = re.findall(r\"\\b[a-z]+\\b\", text.lower())\n    errors = {}",
+        "detail": "backend.regex",
+        "documentation": {}
+    },
+    {
+        "label": "rule_based_check",
+        "kind": 2,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "def rule_based_check(text):\n    words = re.findall(r\"\\b[a-z]+\\b\", text.lower())\n    errors = {}\n    for word in words:\n        if violates_rules(word) or not is_valid_structure(word):\n            errors[word] = {\n                \"violates_rules\": violates_rules(word),\n                \"invalid_structure\": not is_valid_structure(word)\n            }\n    return errors",
+        "detail": "backend.regex",
+        "documentation": {}
+    },
+    {
+        "label": "forbidden_patterns",
+        "kind": 5,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "forbidden_patterns = [\n    r\"nb\",\n    r\"mk\",\n    r\"dt\",\n    r\"bp\",\n    r\"sz\"\n]\n\"\"\"Fonction de vérification par règles\"\"\"\ndef violates_rules(word):\n    for pattern in forbidden_patterns:",
+        "detail": "backend.regex",
+        "documentation": {}
+    },
+    {
+        "label": "test_words",
+        "kind": 5,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "test_words = [\n    \"anbato\",\n    \"mkaty\",\n    \"andriamanitra\",\n    \"malagasy\",\n    \"szaka\"\n]\nfor w in test_words:\n    print(w, \"→\", violates_rules(w))\n\"\"\"verification de la structure complete\"\"\"",
+        "detail": "backend.regex",
+        "documentation": {}
+    },
+    {
+        "label": "text",
+        "kind": 5,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "text = \"anbato malagasy szaka m@la dtara\"\nresult = rule_based_check(text)\nfor word, info in result.items():\n    print(f\"X {word} → {info}\")",
+        "detail": "backend.regex",
+        "documentation": {}
+    },
+    {
+        "label": "result",
+        "kind": 5,
+        "importPath": "backend.regex",
+        "description": "backend.regex",
+        "peekOfCode": "result = rule_based_check(text)\nfor word, info in result.items():\n    print(f\"X {word} → {info}\")",
+        "detail": "backend.regex",
+        "documentation": {}
+    }
+]

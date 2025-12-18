@@ -1,0 +1,63 @@
+import re
+
+"""Définir les règles interdites"""
+
+forbidden_patterns = [
+    r"nb",
+    r"mk",
+    r"dt",
+    r"bp",
+    r"sz"
+]
+
+"""Fonction de vérification par règles"""
+
+def violates_rules(word):
+    for pattern in forbidden_patterns:
+        if re.search(pattern, word):
+            return True
+    return False
+
+"""petite test"""
+
+test_words = [
+    "anbato",
+    "mkaty",
+    "andriamanitra",
+    "malagasy",
+    "szaka"
+]
+
+for w in test_words:
+    print(w, "→", violates_rules(w))
+
+"""verification de la structure complete"""
+
+def is_valid_structure(word):
+    pattern = r"^[a-z]{2,}$"
+    return re.match(pattern, word) is not None
+
+print(is_valid_structure("malagasy"))  # True
+print(is_valid_structure("m@la"))      # False
+print(is_valid_structure("a"))
+
+"""Analyse complète par règles"""
+
+def rule_based_check(text):
+    words = re.findall(r"\b[a-z]+\b", text.lower())
+    errors = {}
+
+    for word in words:
+        if violates_rules(word) or not is_valid_structure(word):
+            errors[word] = {
+                "violates_rules": violates_rules(word),
+                "invalid_structure": not is_valid_structure(word)
+            }
+
+    return errors
+
+text = "anbato malagasy szaka m@la dtara"
+result = rule_based_check(text)
+
+for word, info in result.items():
+    print(f"X {word} → {info}")
