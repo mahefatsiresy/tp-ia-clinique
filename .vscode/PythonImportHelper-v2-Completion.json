@@ -18,31 +18,23 @@
         "documentation": {}
     },
     {
-        "label": "process",
-        "importPath": "rapidfuzz",
-        "description": "rapidfuzz",
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
         "isExtraImport": true,
-        "detail": "rapidfuzz",
-        "documentation": {}
-    },
-    {
-        "label": "fuzz",
-        "importPath": "rapidfuzz",
-        "description": "rapidfuzz",
-        "isExtraImport": true,
-        "detail": "rapidfuzz",
-        "documentation": {}
-    },
-    {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
+        "detail": "fastapi",
         "documentation": {}
     },
     {
         "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -90,12 +82,61 @@
         "documentation": {}
     },
     {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "fuzz",
+        "importPath": "rapidfuzz",
+        "description": "rapidfuzz",
+        "isExtraImport": true,
+        "detail": "rapidfuzz",
+        "documentation": {}
+    },
+    {
+        "label": "process",
+        "importPath": "rapidfuzz",
+        "description": "rapidfuzz",
+        "isExtraImport": true,
+        "detail": "rapidfuzz",
+        "documentation": {}
+    },
+    {
+        "label": "process",
+        "importPath": "rapidfuzz",
+        "description": "rapidfuzz",
+        "isExtraImport": true,
+        "detail": "rapidfuzz",
+        "documentation": {}
+    },
+    {
+        "label": "fuzz",
+        "importPath": "rapidfuzz",
+        "description": "rapidfuzz",
+        "isExtraImport": true,
+        "detail": "rapidfuzz",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "requests",
         "description": "requests",
         "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
         "documentation": {}
     },
     {
@@ -128,7 +169,7 @@
         "kind": 2,
         "importPath": "backend.api.correctionOrthographe",
         "description": "backend.api.correctionOrthographe",
-        "peekOfCode": "def load_dictionary(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return [line.strip().lower() for line in f if line.strip()]\ndictionary = load_dictionary(DICTIONARY_PATH)\ndef is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,\n        dictionary,",
+        "peekOfCode": "def load_dictionary(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return [line.strip().lower() for line in f if line.strip()]\ndictionary = load_dictionary(DICTIONARY_PATH)\ndef is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(word, dictionary, scorer=fuzz.ratio, limit=limit)\n    return [s[0] for s in suggestions]\ndef spell_check_text(text):",
         "detail": "backend.api.correctionOrthographe",
         "documentation": {}
     },
@@ -137,7 +178,7 @@
         "kind": 2,
         "importPath": "backend.api.correctionOrthographe",
         "description": "backend.api.correctionOrthographe",
-        "peekOfCode": "def is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,\n        dictionary,\n        scorer=fuzz.ratio,\n        limit=limit\n    )\n    return [s[0] for s in suggestions]",
+        "peekOfCode": "def is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(word, dictionary, scorer=fuzz.ratio, limit=limit)\n    return [s[0] for s in suggestions]\ndef spell_check_text(text):\n    errors = []\n    for match in re.finditer(r\"\\b\\w+\\b\", text):\n        word = match.group()\n        start_index = match.start()",
         "detail": "backend.api.correctionOrthographe",
         "documentation": {}
     },
@@ -146,7 +187,7 @@
         "kind": 2,
         "importPath": "backend.api.correctionOrthographe",
         "description": "backend.api.correctionOrthographe",
-        "peekOfCode": "def suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,\n        dictionary,\n        scorer=fuzz.ratio,\n        limit=limit\n    )\n    return [s[0] for s in suggestions]\n# 🔥 Analyse avec index caractère + longueur\ndef spell_check_text(text):",
+        "peekOfCode": "def suggest_corrections(word, limit=5):\n    suggestions = process.extract(word, dictionary, scorer=fuzz.ratio, limit=limit)\n    return [s[0] for s in suggestions]\ndef spell_check_text(text):\n    errors = []\n    for match in re.finditer(r\"\\b\\w+\\b\", text):\n        word = match.group()\n        start_index = match.start()\n        length = len(word)\n        if not is_correct(word):",
         "detail": "backend.api.correctionOrthographe",
         "documentation": {}
     },
@@ -155,7 +196,7 @@
         "kind": 2,
         "importPath": "backend.api.correctionOrthographe",
         "description": "backend.api.correctionOrthographe",
-        "peekOfCode": "def spell_check_text(text):\n    errors = {}\n    for match in re.finditer(r\"\\b\\w+\\b\", text):\n        word = match.group()\n        start_index = match.start()\n        length = len(word)\n        if not is_correct(word):\n            if word not in errors:  # éviter doublons\n                errors[word] = {\n                    \"index\": start_index,",
+        "peekOfCode": "def spell_check_text(text):\n    errors = []\n    for match in re.finditer(r\"\\b\\w+\\b\", text):\n        word = match.group()\n        start_index = match.start()\n        length = len(word)\n        if not is_correct(word):\n            if word not in errors:  # éviter doublons\n                errors.append(\n                    {",
         "detail": "backend.api.correctionOrthographe",
         "documentation": {}
     },
@@ -173,7 +214,7 @@
         "kind": 5,
         "importPath": "backend.api.correctionOrthographe",
         "description": "backend.api.correctionOrthographe",
-        "peekOfCode": "DICTIONARY_PATH = os.path.join(os.path.dirname(__file__), \"dictionnaire.txt\")\ndef load_dictionary(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return [line.strip().lower() for line in f if line.strip()]\ndictionary = load_dictionary(DICTIONARY_PATH)\ndef is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,",
+        "peekOfCode": "DICTIONARY_PATH = os.path.join(os.path.dirname(__file__), \"dictionnaire.txt\")\ndef load_dictionary(path):\n    with open(path, \"r\", encoding=\"utf-8\") as f:\n        return [line.strip().lower() for line in f if line.strip()]\ndictionary = load_dictionary(DICTIONARY_PATH)\ndef is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(word, dictionary, scorer=fuzz.ratio, limit=limit)\n    return [s[0] for s in suggestions]",
         "detail": "backend.api.correctionOrthographe",
         "documentation": {}
     },
@@ -182,7 +223,7 @@
         "kind": 5,
         "importPath": "backend.api.correctionOrthographe",
         "description": "backend.api.correctionOrthographe",
-        "peekOfCode": "dictionary = load_dictionary(DICTIONARY_PATH)\ndef is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(\n        word,\n        dictionary,\n        scorer=fuzz.ratio,\n        limit=limit\n    )",
+        "peekOfCode": "dictionary = load_dictionary(DICTIONARY_PATH)\ndef is_correct(word):\n    return word.lower() in dictionary\ndef suggest_corrections(word, limit=5):\n    suggestions = process.extract(word, dictionary, scorer=fuzz.ratio, limit=limit)\n    return [s[0] for s in suggestions]\ndef spell_check_text(text):\n    errors = []\n    for match in re.finditer(r\"\\b\\w+\\b\", text):\n        word = match.group()",
         "detail": "backend.api.correctionOrthographe",
         "documentation": {}
     },
@@ -196,20 +237,65 @@
         "documentation": {}
     },
     {
+        "label": "check_word",
+        "kind": 2,
+        "importPath": "backend.api.dictionary",
+        "description": "backend.api.dictionary",
+        "peekOfCode": "def check_word(word: str = Query(..., description=\"Mot à vérifier\")):\n    exists = word.strip().lower() in WORDS\n    return {\"word\": word, \"exists\": exists}\n@router.get(\"/dictionary/suggestions\", tags=[\"Dictionary\"])\ndef suggest_word(word: str = Query(..., description=\"Mot pour suggestion\"), limit: int = 5):\n    \"\"\"\n    Propose des suggestions proches en utilisant RapidFuzz\n    \"\"\"\n    word = word.strip().lower()\n    suggestions = [match for match, score, *_ in process.extract(word, WORDS, scorer=fuzz.ratio, limit=limit)]",
+        "detail": "backend.api.dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "suggest_word",
+        "kind": 2,
+        "importPath": "backend.api.dictionary",
+        "description": "backend.api.dictionary",
+        "peekOfCode": "def suggest_word(word: str = Query(..., description=\"Mot pour suggestion\"), limit: int = 5):\n    \"\"\"\n    Propose des suggestions proches en utilisant RapidFuzz\n    \"\"\"\n    word = word.strip().lower()\n    suggestions = [match for match, score, *_ in process.extract(word, WORDS, scorer=fuzz.ratio, limit=limit)]\n    return {\"word\": word, \"suggestions\": suggestions}",
+        "detail": "backend.api.dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.api.dictionary",
+        "description": "backend.api.dictionary",
+        "peekOfCode": "router = APIRouter()\n# Charger le dictionnaire\nDICTIONARY_FILE = \"malagasy_dictionary.txt\"\nWORDS = set()\ntry:\n    with open(DICTIONARY_FILE, \"r\", encoding=\"utf-8\") as f:\n        for line in f:\n            w = line.strip().lower()\n            if w:\n                WORDS.add(w)",
+        "detail": "backend.api.dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "DICTIONARY_FILE",
+        "kind": 5,
+        "importPath": "backend.api.dictionary",
+        "description": "backend.api.dictionary",
+        "peekOfCode": "DICTIONARY_FILE = \"malagasy_dictionary.txt\"\nWORDS = set()\ntry:\n    with open(DICTIONARY_FILE, \"r\", encoding=\"utf-8\") as f:\n        for line in f:\n            w = line.strip().lower()\n            if w:\n                WORDS.add(w)\nexcept FileNotFoundError:\n    print(f\"Fichier {DICTIONARY_FILE} non trouvé !\")",
+        "detail": "backend.api.dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "WORDS",
+        "kind": 5,
+        "importPath": "backend.api.dictionary",
+        "description": "backend.api.dictionary",
+        "peekOfCode": "WORDS = set()\ntry:\n    with open(DICTIONARY_FILE, \"r\", encoding=\"utf-8\") as f:\n        for line in f:\n            w = line.strip().lower()\n            if w:\n                WORDS.add(w)\nexcept FileNotFoundError:\n    print(f\"Fichier {DICTIONARY_FILE} non trouvé !\")\n@router.get(\"/dictionary/check\", tags=[\"Dictionary\"])",
+        "detail": "backend.api.dictionary",
+        "documentation": {}
+    },
+    {
         "label": "router",
         "kind": 5,
         "importPath": "backend.api.routes",
         "description": "backend.api.routes",
-        "peekOfCode": "router = APIRouter()\n# Routes Wikipedia\nrouter.include_router(wikipedia_router)\nrouter.include_router(correctionOrthographe_router)",
+        "peekOfCode": "router = APIRouter()\nrouter.include_router(dictionary_router)\nrouter.include_router(wikipedia_router)\nrouter.include_router(correctionOrthographe_router)",
         "detail": "backend.api.routes",
         "documentation": {}
     },
     {
-        "label": "search_wikipedia",
+        "label": "translate_word",
         "kind": 2,
         "importPath": "backend.api.wikipedia",
         "description": "backend.api.wikipedia",
-        "peekOfCode": "def search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": q,\n        \"format\": \"json\",\n        \"utf8\": 1\n    }\n    try:\n        response = requests.get(",
+        "peekOfCode": "def translate_word(word: str = Query(..., description=\"Mot à traduire ou définir\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": word,\n        \"format\": \"json\",\n        \"utf8\": 1\n    }\n    try:\n        response = requests.get(",
         "detail": "backend.api.wikipedia",
         "documentation": {}
     },
@@ -218,7 +304,7 @@
         "kind": 5,
         "importPath": "backend.api.wikipedia",
         "description": "backend.api.wikipedia",
-        "peekOfCode": "router = APIRouter()\nWIKIPEDIA_URL = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\n    \"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (rasolofomanananjakatahiana@gmail.com)\"\n}\n@router.get(\"/wikipedia/search\", tags=[\"Wikipedia MG\"])\ndef search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",",
+        "peekOfCode": "router = APIRouter()\nWIKIPEDIA_URL = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (contact@email.com)\"}\n@router.get(\"/wikipedia/translate\", tags=[\"Wikipedia MG\"])\ndef translate_word(word: str = Query(..., description=\"Mot à traduire ou définir\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": word,\n        \"format\": \"json\",",
         "detail": "backend.api.wikipedia",
         "documentation": {}
     },
@@ -227,7 +313,7 @@
         "kind": 5,
         "importPath": "backend.api.wikipedia",
         "description": "backend.api.wikipedia",
-        "peekOfCode": "WIKIPEDIA_URL = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\n    \"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (rasolofomanananjakatahiana@gmail.com)\"\n}\n@router.get(\"/wikipedia/search\", tags=[\"Wikipedia MG\"])\ndef search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": q,",
+        "peekOfCode": "WIKIPEDIA_URL = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (contact@email.com)\"}\n@router.get(\"/wikipedia/translate\", tags=[\"Wikipedia MG\"])\ndef translate_word(word: str = Query(..., description=\"Mot à traduire ou définir\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": word,\n        \"format\": \"json\",\n        \"utf8\": 1",
         "detail": "backend.api.wikipedia",
         "documentation": {}
     },
@@ -236,8 +322,89 @@
         "kind": 5,
         "importPath": "backend.api.wikipedia",
         "description": "backend.api.wikipedia",
-        "peekOfCode": "HEADERS = {\n    \"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (rasolofomanananjakatahiana@gmail.com)\"\n}\n@router.get(\"/wikipedia/search\", tags=[\"Wikipedia MG\"])\ndef search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": q,\n        \"format\": \"json\",",
+        "peekOfCode": "HEADERS = {\"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (contact@email.com)\"}\n@router.get(\"/wikipedia/translate\", tags=[\"Wikipedia MG\"])\ndef translate_word(word: str = Query(..., description=\"Mot à traduire ou définir\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": word,\n        \"format\": \"json\",\n        \"utf8\": 1\n    }",
         "detail": "backend.api.wikipedia",
+        "documentation": {}
+    },
+    {
+        "label": "clean_text",
+        "kind": 2,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "def clean_text(text):\n    text = re.sub(r\"<.*?>\", \"\", text)         # retirer balises HTML\n    text = re.sub(r\"[^\\w\\s'-]\", \"\", text)    # retirer ponctuation\n    words = [w.lower() for w in text.split() if len(w) >= MIN_WORD_LENGTH]\n    return words\n# Récupérer extrait et liens internes d'une page\ndef fetch_page(title):\n    params = {\n        \"action\": \"query\",\n        \"titles\": title,",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "fetch_page",
+        "kind": 2,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "def fetch_page(title):\n    params = {\n        \"action\": \"query\",\n        \"titles\": title,\n        \"prop\": \"extracts|links\",\n        \"explaintext\": 1,\n        \"pllimit\": \"max\",\n        \"format\": \"json\"\n    }\n    res = requests.get(WIKI_MG_API, params=params, headers=HEADERS, timeout=10)",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "build_dictionary",
+        "kind": 2,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "def build_dictionary():\n    dictionary = set()\n    visited = set()\n    queue = list(SEEDS)\n    while queue and len(visited) < MAX_PAGES:\n        current = queue.pop(0)\n        if current in visited:\n            continue\n        try:\n            words, links = fetch_page(current)",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "WIKI_MG_API",
+        "kind": 5,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "WIKI_MG_API = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\"User-Agent\": \"Python-Dictionary-Complete/1.0\"}\n# Pages de départ (SEEDS) pour explorer un maximum de vocabulaire\nSEEDS = [\n    \"Madagasikara\", \"Antananarivo\", \"Firenena\", \"Tantara\", \"Olona\",\n    \"Zava-maniry\", \"Zavatra\", \"Kolontsaina\", \"Fiainana\", \"Fampianarana\"\n]\n# Nombre maximal de pages à explorer\nMAX_PAGES = 2000\n# Longueur minimale d'un mot pour être inclus",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "HEADERS",
+        "kind": 5,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "HEADERS = {\"User-Agent\": \"Python-Dictionary-Complete/1.0\"}\n# Pages de départ (SEEDS) pour explorer un maximum de vocabulaire\nSEEDS = [\n    \"Madagasikara\", \"Antananarivo\", \"Firenena\", \"Tantara\", \"Olona\",\n    \"Zava-maniry\", \"Zavatra\", \"Kolontsaina\", \"Fiainana\", \"Fampianarana\"\n]\n# Nombre maximal de pages à explorer\nMAX_PAGES = 2000\n# Longueur minimale d'un mot pour être inclus\nMIN_WORD_LENGTH = 2",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "SEEDS",
+        "kind": 5,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "SEEDS = [\n    \"Madagasikara\", \"Antananarivo\", \"Firenena\", \"Tantara\", \"Olona\",\n    \"Zava-maniry\", \"Zavatra\", \"Kolontsaina\", \"Fiainana\", \"Fampianarana\"\n]\n# Nombre maximal de pages à explorer\nMAX_PAGES = 2000\n# Longueur minimale d'un mot pour être inclus\nMIN_WORD_LENGTH = 2\n# Temps entre les requêtes pour éviter surcharge API (en secondes)\nREQUEST_DELAY = 0.2",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "MAX_PAGES",
+        "kind": 5,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "MAX_PAGES = 2000\n# Longueur minimale d'un mot pour être inclus\nMIN_WORD_LENGTH = 2\n# Temps entre les requêtes pour éviter surcharge API (en secondes)\nREQUEST_DELAY = 0.2\n# Nettoyage et extraction des mots\ndef clean_text(text):\n    text = re.sub(r\"<.*?>\", \"\", text)         # retirer balises HTML\n    text = re.sub(r\"[^\\w\\s'-]\", \"\", text)    # retirer ponctuation\n    words = [w.lower() for w in text.split() if len(w) >= MIN_WORD_LENGTH]",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "MIN_WORD_LENGTH",
+        "kind": 5,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "MIN_WORD_LENGTH = 2\n# Temps entre les requêtes pour éviter surcharge API (en secondes)\nREQUEST_DELAY = 0.2\n# Nettoyage et extraction des mots\ndef clean_text(text):\n    text = re.sub(r\"<.*?>\", \"\", text)         # retirer balises HTML\n    text = re.sub(r\"[^\\w\\s'-]\", \"\", text)    # retirer ponctuation\n    words = [w.lower() for w in text.split() if len(w) >= MIN_WORD_LENGTH]\n    return words\n# Récupérer extrait et liens internes d'une page",
+        "detail": "backend.generate_dictionary",
+        "documentation": {}
+    },
+    {
+        "label": "REQUEST_DELAY",
+        "kind": 5,
+        "importPath": "backend.generate_dictionary",
+        "description": "backend.generate_dictionary",
+        "peekOfCode": "REQUEST_DELAY = 0.2\n# Nettoyage et extraction des mots\ndef clean_text(text):\n    text = re.sub(r\"<.*?>\", \"\", text)         # retirer balises HTML\n    text = re.sub(r\"[^\\w\\s'-]\", \"\", text)    # retirer ponctuation\n    words = [w.lower() for w in text.split() if len(w) >= MIN_WORD_LENGTH]\n    return words\n# Récupérer extrait et liens internes d'une page\ndef fetch_page(title):\n    params = {",
+        "detail": "backend.generate_dictionary",
         "documentation": {}
     },
     {
@@ -254,7 +421,7 @@
         "kind": 5,
         "importPath": "backend.main",
         "description": "backend.main",
-        "peekOfCode": "app = FastAPI(title=\"FastAPI + Wikipedia Malgache\")\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\napp.include_router(router, prefix=\"/api\")\n@app.get(\"/\")\ndef root():",
+        "peekOfCode": "app = FastAPI(title=\"Éditeur Malagasy - Backend\")\n# Autoriser frontend\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],  # à restreindre selon ton frontend\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\n# Inclure toutes les routes\napp.include_router(router, prefix=\"/api\")",
         "detail": "backend.main",
         "documentation": {}
     },
