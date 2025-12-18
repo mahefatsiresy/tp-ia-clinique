@@ -21,8 +21,10 @@ export default function Editor() {
   };
 
   return (
-    <div className="grid grid-cols-2">
-      <QuillEditor onChange={handleChange} debounce={800} ref={editorRef} />
+    <div className="grid grid-cols-3">
+      <div className="col-span-2">
+        <QuillEditor onChange={handleChange} debounce={800} ref={editorRef} />
+      </div>
       <Suggestion suggestions={suggestions} />
     </div>
   );
