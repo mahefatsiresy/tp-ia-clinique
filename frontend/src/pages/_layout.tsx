@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         precedence="font"
       />
-      <main className="container">{children}</main>
+      <main>{children}</main>
     </div>
   );
 }

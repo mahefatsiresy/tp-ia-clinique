@@ -1,0 +1,93 @@
+@import "quill/dist/quill.snow.css";
+
+/* Custom scrollbar for suggestions panel */
+.suggestion-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestion-panel::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.suggestion-panel::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.suggestion-panel::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Dark mode scrollbar */
+.dark .suggestion-panel::-webkit-scrollbar-track {
+    background: #374151;
+}
+
+.dark .suggestion-panel::-webkit-scrollbar-thumb {
+    background: #4b5563;
+}
+
+.dark .suggestion-panel::-webkit-scrollbar-thumb:hover {
+    background: #6b7280;
+}
+
+/* Smooth transitions */
+* {
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Custom Quill editor styling */
+.ql-container {
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.ql-editor {
+    min-height: 500px;
+    padding: 24px !important;
+}
+
+.ql-toolbar {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    border-color: #e5e7eb !important;
+}
+
+.dark .ql-toolbar {
+    border-color: #4b5563 !important;
+    background: #374151;
+}
+
+/* Animation for error highlighting */
+@keyframes highlightPulse {
+    0%,
+    100% {
+        background-color: rgba(239, 68, 68, 0.1);
+    }
+    50% {
+        background-color: rgba(239, 68, 68, 0.2);
+    }
+}
+
+.spellcheck-highlight {
+    animation: highlightPulse 2s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ql-editor {
+        min-height: 300px;
+        padding: 16px !important;
+        font-size: 15px;
+    }
+}

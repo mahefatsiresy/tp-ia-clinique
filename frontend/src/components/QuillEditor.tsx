@@ -1,7 +1,7 @@
 "use client";
 
 import Quill, { EmitterSource, Range, type QuillOptions } from "quill";
-import "quill/dist/quill.snow.css";
+import "./EditorStyle.css";
 import {
   forwardRef,
   useCallback,
