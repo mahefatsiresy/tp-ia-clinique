@@ -24,7 +24,7 @@ def search_wikipedia(q: str = Query(..., description="Mot à rechercher en malga
             WIKIPEDIA_URL,
             params=params,
             headers=HEADERS,
-            timeout=5  # ⚠️ empêche le blocage
+            timeout=5  #  empêche le blocage
         )
         response.raise_for_status()
     except requests.RequestException as e:
