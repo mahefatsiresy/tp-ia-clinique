@@ -18,7 +18,12 @@ def translate_word(word: str = Query(..., description="Mot à traduire ou défin
     }
 
     try:
-        response = requests.get(WIKIPEDIA_URL, params=params, headers=HEADERS, timeout=5)
+        response = requests.get(
+            WIKIPEDIA_URL,
+            params=params,
+            headers=HEADERS,
+            timeout=5  #  empêche le blocage
+        )
         response.raise_for_status()
     except requests.RequestException as e:
         raise HTTPException(status_code=503, detail=str(e))
