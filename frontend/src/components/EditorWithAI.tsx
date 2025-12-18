@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { checkSpelling } from "../features/spellcheck";
+// import { checkSpelling } from "../features/spellcheck";
 import type {
   EditorChangeData,
   QuillEditorRef,
@@ -14,8 +14,8 @@ export default function Editor() {
   const [suggestions, setSuggestions] = useState<SpellError[]>([]);
   const editorRef = useRef<QuillEditorRef>(null);
 
-  const handleChange = ({ text }: EditorChangeData) => {
-    const error = checkSpelling(text);
+  const handleChange = async ({ text }: EditorChangeData) => {
+    const error = await checkSpelling(text);
     highlightError(editorRef.current, error);
     setSuggestions(error);
   };
@@ -26,6 +26,20 @@ export default function Editor() {
       <Suggestion suggestions={suggestions} />
     </div>
   );
+}
+
+async function checkSpelling(text: string) {
+  const response = await fetch("http://localhost:8000/api/corriger", {
+    body: JSON.stringify({
+      texte: text,
+    }),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data.errors as SpellError[];
 }
 
 function highlightError(
