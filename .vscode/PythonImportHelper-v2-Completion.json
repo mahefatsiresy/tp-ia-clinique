@@ -1,5 +1,62 @@
 [
     {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -34,14 +91,6 @@
         "documentation": {}
     },
     {
-        "label": "FastAPI",
-        "importPath": "fastapi",
-        "description": "fastapi",
-        "isExtraImport": true,
-        "detail": "fastapi",
-        "documentation": {}
-    },
-    {
         "label": "BaseModel",
         "importPath": "pydantic",
         "description": "pydantic",
@@ -64,6 +113,67 @@
         "description": "fastapi.middleware.cors",
         "isExtraImport": true,
         "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "api.routes",
+        "description": "api.routes",
+        "isExtraImport": true,
+        "detail": "api.routes",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.api.routes",
+        "description": "backend.api.routes",
+        "peekOfCode": "router = APIRouter()\n# Routes Wikipedia\nrouter.include_router(wikipedia_router)",
+        "detail": "backend.api.routes",
+        "documentation": {}
+    },
+    {
+        "label": "search_wikipedia",
+        "kind": 2,
+        "importPath": "backend.api.wikipedia",
+        "description": "backend.api.wikipedia",
+        "peekOfCode": "def search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": q,\n        \"format\": \"json\",\n        \"utf8\": 1\n    }\n    try:\n        response = requests.get(",
+        "detail": "backend.api.wikipedia",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "backend.api.wikipedia",
+        "description": "backend.api.wikipedia",
+        "peekOfCode": "router = APIRouter()\nWIKIPEDIA_URL = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\n    \"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (rasolofomanananjakatahiana@gmail.com)\"\n}\n@router.get(\"/wikipedia/search\", tags=[\"Wikipedia MG\"])\ndef search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",",
+        "detail": "backend.api.wikipedia",
+        "documentation": {}
+    },
+    {
+        "label": "WIKIPEDIA_URL",
+        "kind": 5,
+        "importPath": "backend.api.wikipedia",
+        "description": "backend.api.wikipedia",
+        "peekOfCode": "WIKIPEDIA_URL = \"https://mg.wikipedia.org/w/api.php\"\nHEADERS = {\n    \"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (rasolofomanananjakatahiana@gmail.com)\"\n}\n@router.get(\"/wikipedia/search\", tags=[\"Wikipedia MG\"])\ndef search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": q,",
+        "detail": "backend.api.wikipedia",
+        "documentation": {}
+    },
+    {
+        "label": "HEADERS",
+        "kind": 5,
+        "importPath": "backend.api.wikipedia",
+        "description": "backend.api.wikipedia",
+        "peekOfCode": "HEADERS = {\n    \"User-Agent\": \"FastAPI-Wikipedia-MG/1.0 (rasolofomanananjakatahiana@gmail.com)\"\n}\n@router.get(\"/wikipedia/search\", tags=[\"Wikipedia MG\"])\ndef search_wikipedia(q: str = Query(..., description=\"Mot à rechercher en malgache\")):\n    params = {\n        \"action\": \"query\",\n        \"list\": \"search\",\n        \"srsearch\": q,\n        \"format\": \"json\",",
+        "detail": "backend.api.wikipedia",
         "documentation": {}
     },
     {
@@ -163,6 +273,24 @@
         "description": "backend.correctionOrthographe",
         "peekOfCode": "origins = [\n    \"http://localhost:3000\",  # URL de ton frontend React par exemple\n    \"*\",  # tu peux mettre \"*\" temporairement pour tout autoriser\n]\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=origins,\n    allow_credentials=True,\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],",
         "detail": "backend.correctionOrthographe",
+        "documentation": {}
+    },
+    {
+        "label": "root",
+        "kind": 2,
+        "importPath": "backend.main",
+        "description": "backend.main",
+        "peekOfCode": "def root():\n    return {\"status\": \"Backend OK\"}",
+        "detail": "backend.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.main",
+        "description": "backend.main",
+        "peekOfCode": "app = FastAPI(title=\"FastAPI + Wikipedia Malgache\")\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_methods=[\"*\"],\n    allow_headers=[\"*\"],\n)\napp.include_router(router, prefix=\"/api\")\n@app.get(\"/\")\ndef root():",
+        "detail": "backend.main",
         "documentation": {}
     },
     {
