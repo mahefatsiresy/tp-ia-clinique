@@ -1,2 +1,8 @@
 node_modules
 .vite
+dist
+.env*
+*.tsbuildinfo
+.cache
+.DS_Store
+*.pem
